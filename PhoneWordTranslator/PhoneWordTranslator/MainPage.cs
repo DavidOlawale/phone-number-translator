@@ -1,6 +1,7 @@
 ﻿using Core;
 using System;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 public partial class MainPage : ContentPage
@@ -71,7 +72,19 @@ public partial class MainPage : ContentPage
             "Yes",
             "Cancel"))
         {
+            try
+            {
+                PhoneDialer.Open(TranslatedNumber);
+            }
+            catch (ArgumentNullException)
+            {
+                await DisplayAlert("Error", "Invalid phone number", "Ok");
+            }
+            catch (Exception)
+            {
 
+                await DisplayAlert("Error", "Could not dial", "Ok");
+            }
         }
     }
 }
